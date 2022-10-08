@@ -4,6 +4,7 @@ import { Result } from "../../types/dataTypes";
 
 export const Table = () => {
   const { data } = useContext(Context);
+  console.log('data: ', data);
 
   const renderColumn = useMemo(() => {
     if (data.length) {
@@ -16,17 +17,18 @@ export const Table = () => {
       <thead>
         <tr>
           {renderColumn?.map((item) => (
-            <th key={item}>{item}</th>
+            <th style={{rowGap: '25px'}} key={item}>{item}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        <tr>
-          {!!data.length &&
-            data
-              .map((planets) => Object.values(planets))
-              .map((item) => <td key={item}>{item}</td>)}
-        </tr>
+        {!!data.length && data.map((planets: any) => {
+          return (
+            <tr>
+              {renderColumn?.map((cur: any) => (<td>{planets[cur]}</td>))}
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   );
